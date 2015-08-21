@@ -1,0 +1,15 @@
+# Compiled source #
+###################
+*.class
+ 
+# Eclipse generated #
+#####################
+*.prefs
+*.classpath
+*.project
+
+# Intellij generated #
+#####################
+*.xml
+*.iml
+.idea
