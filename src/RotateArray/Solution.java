@@ -3,21 +3,30 @@ public class Solution {
         if(nums == null){
             return;
         }
-        int n = nums.length;
-        if(k % n == 0){
+        int len = nums.length;
+        if(k % len == 0){
             return;
         }
         
-        int[] tmp = Arrays.copyOf(nums, n);
-        if(k > n){
-            k %= n;
+        k %= len;
+        int len1 = len - k;
+        
+        reverse(nums, 0, len1 -1);
+        reverse(nums, len1, len -1);
+        reverse(nums, 0, len -1);
+    }
+    
+    private void reverse(int[] nums, int start, int end){
+        while(start < end){
+            swap(nums, start, end);
+            start ++;
+            end--;
         }
-        int index = 0;
-        for(int i = n-k; ; i++, index ++){
-            nums[index] = tmp[i% n];
-            if(i % n == n -k -1){
-                break;
-            }
-        }
+    }
+    
+    private void swap(int[] nums, int i, int j){
+        int tmp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = tmp;
     }
 }
