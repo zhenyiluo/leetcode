@@ -3,21 +3,19 @@ public class Solution {
         if(k < 1 || nums == null || nums.length < 1){
             return new int[0];
         }
-        PriorityQueue<Integer> pq = new PriorityQueue<Integer>(10, new Comparator<Integer>(){
-            @Override
-            public int compare(Integer i1, Integer i2){
-                return i2 - i1;
-            }
-        });
-        for(int i = 0; i < k; i++){
-            pq.add(nums[i]);
-        }
         int[] ret = new int[nums.length - k + 1];
-        ret[0] = pq.peek();
-        for(int i = k ; i < nums.length; i++){
-            pq.remove(nums[i - k]);
-            pq.add(nums[i]);
-            ret[i-k + 1] = pq.peek();
+        LinkedList<Integer> list = new LinkedList<Integer>();
+        for(int i = 0; i < nums.length; i++){
+            while(!list.isEmpty() && nums[i] >= nums[list.getLast()]){
+                list.removeLast();
+            }
+            list.addLast(i);
+            if(i - list.getFirst() + 1 > k){
+                list.removeFirst();
+            }
+            if(i + 1 >=k){
+                ret[i+1 -k] = nums[list.getFirst()];
+            }
         }
         return ret;
     }
