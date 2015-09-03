@@ -1,18 +1,28 @@
 public class Solution {
     public int[] singleNumber(int[] nums) {
         int[] ret = new int[2];
-        HashSet<Integer> hs = new HashSet<Integer>();
+        int mask = 0;
         for(int n : nums){
-            if(hs.contains(n)){
-                hs.remove(n);
-            }else{
-                hs.add(n);
+            mask ^= n;
+        }
+        
+        int pos = 0;
+        for(; pos < nums.length; pos++){
+            if((mask & (1 << pos)) != 0){
+                break;
             }
         }
-        int index = 0;
-        for(int n : hs){
-            ret[index++] = n;
+        int a = 0; 
+        int b = 0;
+        for(int n : nums){
+            if((n & (1 << pos)) != 0){
+                a ^= n;
+            }else{
+                b ^= n;
+            }
         }
+        ret[0] = a;
+        ret[1] = b;
         return ret;
     }
 }
