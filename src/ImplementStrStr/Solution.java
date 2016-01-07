@@ -1,3 +1,4 @@
+// KMP implementation
 public class Solution {
     public int strStr(String haystack, String needle) {
         if(haystack == null || needle == null || needle.length() > haystack.length()) {
