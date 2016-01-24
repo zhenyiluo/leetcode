@@ -1,15 +1,15 @@
 public class WordDictionary {
     static class TrieNode{
-        TrieNode[] children; 
+        TrieNode[] children;
         boolean wordEndHere;
         public TrieNode(){
             children = new TrieNode[26];
             wordEndHere = false;
         }
     }
-    
+
     TrieNode root;
-    
+
     public WordDictionary(){
         root = new TrieNode();
     }
