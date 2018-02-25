@@ -1,4 +1,4 @@
-public class NumMatrix1 {
+class NumMatrix1 {
     int[][] vals;
     int[][] tree;
     int m;
@@ -18,11 +18,7 @@ public class NumMatrix1 {
         }
     }
     public void update(int row, int col, int val) {
-        if(m == 0 || n== 0){
-            return;
-        }
-        int ori = vals[row][col];
-        int diff = val - ori;
+        int diff = val - vals[row][col];
         if(diff == 0){
             return;
         }
@@ -36,9 +32,6 @@ public class NumMatrix1 {
     }
 
     public int sumRegion(int row1, int col1, int row2, int col2) {
-        if(m == 0 || n == 0){
-            return 0;
-        }
         return sum(row2+1, col2+1) + sum(row1, col1) - sum(row1, col2+1) - sum (row2+1, col1);
     }
 
@@ -51,12 +44,11 @@ public class NumMatrix1 {
         }
         return ret;
     }
-
 }
 
-
-// Your NumMatrix object will be instantiated and called as such:
-// NumMatrix numMatrix = new NumMatrix(matrix);
-// numMatrix.sumRegion(0, 1, 2, 3);
-// numMatrix.update(1, 1, 10);
-// numMatrix.sumRegion(1, 2, 3, 4);
+/**
+ * Your NumMatrix object will be instantiated and called as such:
+ * NumMatrix obj = new NumMatrix(matrix);
+ * obj.update(row,col,val);
+ * int param_2 = obj.sumRegion(row1,col1,row2,col2);
+ */
