@@ -1,10 +1,7 @@
-public class NumArray {
+class NumArray {
     int[] tree;
     int[] vals;
     public NumArray(int[] nums) {
-        if(nums == null || nums.length == 0){
-            return;
-        }
         int len = nums.length;
         tree = new int[len+1];
         vals = new int[len];
@@ -13,39 +10,31 @@ public class NumArray {
         }
     }
 
-    void update(int i, int val) {
-        if(tree == null){
-            return;
-        }
-        int dif = val - vals[i];
-        if(dif == 0){
-            return;
-        }
+    public void update(int i, int val) {
+        int diff = val - vals[i];
+        if(diff == 0) return;
         vals[i] = val;
         for(int j = i+1; j < tree.length; j += j & (-j)){
-            tree[j] += dif;
+            tree[j] += diff;
         }
     }
 
     public int sumRange(int i, int j) {
-        if(tree == null){
-            return 0;
-        }
-        return query(j + 1) - query(i);
+        return query(j+1) - query(i);
     }
-    
-    private int query(int i){
+
+    private int query(int pos){
         int ret = 0;
-        for(int j = i; j > 0; j -= j & (-j)){
+        for(int j = pos; j > 0; j -= j & (-j)){
             ret += tree[j];
         }
         return ret;
     }
 }
 
-
-// Your NumArray object will be instantiated and called as such:
-// NumArray numArray = new NumArray(nums);
-// numArray.sumRange(0, 1);
-// numArray.update(1, 10);
-// numArray.sumRange(1, 2);
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * NumArray obj = new NumArray(nums);
+ * obj.update(i,val);
+ * int param_2 = obj.sumRange(i,j);
+ */
