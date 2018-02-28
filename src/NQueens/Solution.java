@@ -1,45 +1,49 @@
-public class Solution {
+class Solution {
     public List<List<String>> solveNQueens(int n) {
+        char[][] board = new char[n][n];
         List<List<String>> ret = new ArrayList<>();
-        int[] a = new int[n];
-        dfs(0, n, a, ret);
+        for(int i = 0; i < n; i++){
+            for(int j = 0; j < n; j++){
+                board[i][j] = '.';
+            }
+        }
+        dfs(board, ret, 0);
         return ret;
     }
 
-    private void dfs(int row, int n, int[] a, List<List<String>> ret){
+    private void dfs(char[][] board, List<List<String>> ret, int row){
+        int n = board.length;
         if(row == n){
-            addToResult(n, a, ret);
+            ret.add(construct(board));
         }
-        for(int i = 0; i < n; i++){
-            if(check(row, i, a)){
-                a[row] = i;
-                dfs(row + 1, n, a, ret);
+
+        for(int j = 0; j < n; j++){
+            if(isValid(board, row, j)){
+                board[row][j] = 'Q';
+                dfs(board, ret, row+1);
+                board[row][j] = '.';
             }
         }
     }
 
-    private boolean check(int row, int num, int[] a){
-        for(int i= 0; i< row; i++){
-            if(a[i] == num || Math.abs(row - i) == Math.abs(num - a[i])){
-                return false;
+    private boolean isValid(char[][] board, int x, int y){
+        for(int i = 0; i < x; i++){
+            for(int j =0; j < board[0].length; j++){
+                if(board[i][j] == 'Q'){
+                    if(j == y || Math.abs(i - x) == Math.abs(j - y)){
+                        return false;
+                    }
+                }
             }
         }
         return true;
     }
 
-    private void addToResult(int n, int[] a, List<List<String>> ret){
-        List<String> tmp = new ArrayList<>();
-        for(int i = 0; i < n; i++){
-            StringBuilder sb = new StringBuilder();
-            for(int j = 0; j < n; j++){
-                if(a[i] == j){
-                    sb.append("Q");
-                }else{
-                    sb.append(".");
-                }
-            }
-            tmp.add(sb.toString());
+    private List<String> construct(char[][] board){
+        List<String> ret = new ArrayList<>();
+        for(int i = 0; i < board.length; i++){
+            ret.add(new String(board[i]));
         }
-        ret.add(tmp);
+        return ret;
     }
 }
