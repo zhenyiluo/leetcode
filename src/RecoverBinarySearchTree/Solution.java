@@ -7,35 +7,33 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
-public class Solution {
-    List<TreeNode> list = new ArrayList<TreeNode>();
-    TreeNode prev = null;
+class Solution {
+    TreeNode first = null;
+    TreeNode second = null;
+    TreeNode prev = new TreeNode(Integer.MIN_VALUE);
     public void recoverTree(TreeNode root) {
+        if(root == null) return;
         dfs(root);
-        
-        if(list.size() > 0){
-            swapTwoNodes(list.get(0), list.get(list.size() - 1));
-        }
+        int tmp = first.val;
+        first.val = second.val;
+        second.val = tmp;
+        return;
     }
-    
+
     private void dfs(TreeNode node){
-        if(node == null){
-            return;
-        }
+        if(node == null) return;
         dfs(node.left);
-        
-        if(prev != null && prev.val > node.val){
-            list.add(prev);
-            list.add(node);
+
+        if(first == null && prev.val > node.val){
+            first = prev;
         }
+
+        if(first != null && prev.val > node.val){
+            second = node;
+        }
+
         prev = node;
-        
+
         dfs(node.right);
-    }
-    
-    private void swapTwoNodes(TreeNode node1, TreeNode node2){
-        int tmp = node1.val;
-        node1.val = node2.val;
-        node2.val = tmp;
     }
 }

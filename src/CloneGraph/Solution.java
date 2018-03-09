@@ -9,16 +9,15 @@
 public class Solution {
     HashMap<UndirectedGraphNode, UndirectedGraphNode> hm = new HashMap<>();
     public UndirectedGraphNode cloneGraph(UndirectedGraphNode node) {
-        if(node == null){
-            return null;
+        if(node == null) return node;
+        if(hm.containsKey(node)){
+            return hm.get(node);
         }
-        if(!hm.containsKey(node)){
-            UndirectedGraphNode newNode = new UndirectedGraphNode(node.label);
-            hm.put(node, newNode);
-            for(UndirectedGraphNode neighbor : node.neighbors){
-                newNode.neighbors.add(cloneGraph(neighbor));
-            }
+        UndirectedGraphNode newNode = new UndirectedGraphNode(node.label);
+        hm.put(node, newNode);
+        for(UndirectedGraphNode neighbor : node.neighbors){
+            newNode.neighbors.add(cloneGraph(neighbor));
         }
-        return hm.get(node);
+        return newNode;
     }
 }
