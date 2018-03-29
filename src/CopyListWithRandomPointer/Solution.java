@@ -8,24 +8,25 @@
  */
 public class Solution {
     public RandomListNode copyRandomList(RandomListNode head) {
-        HashMap<RandomListNode, RandomListNode> hm = new HashMap<>();
-        RandomListNode curOld = head;
-        RandomListNode ret = new RandomListNode(0);
+        RandomListNode ret = new RandomListNode(-1);
+        RandomListNode cur = head;
         RandomListNode curNew = ret;
-        while(curOld != null){
-            RandomListNode copy = new RandomListNode(curOld.label);
-            hm.put(curOld, copy);
+        HashMap<RandomListNode,RandomListNode> hm = new HashMap<>();
+        while(cur != null){
+            RandomListNode copy = new RandomListNode(cur.label);
+            hm.put(cur, copy);
             curNew.next = copy;
             curNew = curNew.next;
-            curOld = curOld.next;
+            cur = cur.next;
         }
-        curOld = head;
-        while(curOld != null){
-            RandomListNode random = curOld.random;
+
+        cur = head;
+        while(cur != null){
+            RandomListNode random = cur.random;
             RandomListNode randomNew = hm.get(random);
-            curNew = hm.get(curOld);
+            curNew = hm.get(cur);
             curNew.random = randomNew;
-            curOld = curOld.next;
+            cur = cur.next;
         }
         return ret.next;
     }
