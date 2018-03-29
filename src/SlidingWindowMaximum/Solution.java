@@ -1,20 +1,23 @@
-public class Solution {
+class Solution {
     public int[] maxSlidingWindow(int[] nums, int k) {
-        if(k < 1 || nums == null || nums.length < 1){
-            return new int[0];
-        }
-        int[] ret = new int[nums.length - k + 1];
-        LinkedList<Integer> list = new LinkedList<Integer>();
-        for(int i = 0; i < nums.length; i++){
-            while(!list.isEmpty() && nums[i] >= nums[list.getLast()]){
-                list.removeLast();
-            }
-            list.addLast(i);
-            if(i - list.getFirst() + 1 > k){
+        if(nums == null || k <= 0) return new int[0];
+        int n = nums.length;
+        int[] ret = new int[n - k + 1];
+        int index = 0;
+        LinkedList<Integer> list = new LinkedList<>();
+        for(int i = 0; i < n; i++){
+            if(!list.isEmpty() && list.getFirst() < i - k + 1){
                 list.removeFirst();
             }
-            if(i + 1 >=k){
-                ret[i+1 -k] = nums[list.getFirst()];
+
+            while(!list.isEmpty() && nums[list.getLast()] < nums[i]){
+                list.removeLast();
+            }
+
+            list.add(i);
+
+            if(i + 1 >= k){
+                ret[index++] = nums[list.getFirst()];
             }
         }
         return ret;
