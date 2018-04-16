@@ -1,39 +1,23 @@
-public class Solution1 {
+class Solution1 {
     public int lengthOfLIS(int[] nums) {
-        if(nums == null || nums.length == 0){
-            return 0;
-        }
-        
-        if(nums.length == 1){
-            return 1;
-        }
-        
-        ArrayList<Integer> list = new ArrayList<>();
-        
-        for(int n : nums){
-            if(list.size() == 0 || n > list.get(list.size() - 1)){
-                list.add(n);
-            }else{
-                int index = helper(list, n);
-                list.set(index, n);
+        if(nums == null || nums.length == 0) return 0;
+        int n = nums.length;
+        int[] tails = new int[n];
+        int size = 0;
+        for(int num: nums){
+            int i = 0;
+            int j = size;
+            while(i < j){
+                int mid = i + (j - i) / 2;
+                if(num > tails[mid]){
+                    i = mid + 1;
+                }else{
+                    j = mid;
+                }
             }
+            tails[i] = num;
+            if(i == size) size ++;
         }
-        return list.size();
-    }
-    
-    private int helper(ArrayList<Integer> list, int n){
-        int low = 0; 
-        int high = list.size() - 1;
-        while(low <= high){
-            int mid = low + ((high - low)>> 1);
-            if(list.get(mid) == n){
-                return mid;
-            }else if(list.get(mid) < n){
-                low = mid + 1;
-            }else{
-                high = mid - 1;
-            }
-        }
-        return low;
+        return size;
     }
 }
