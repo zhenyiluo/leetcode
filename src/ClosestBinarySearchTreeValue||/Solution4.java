@@ -7,13 +7,13 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
-class Solution {
+class Solution4 {
     public List<Integer> closestKValues(TreeNode root, double target, int k) {
         Stack<TreeNode> pred = new Stack<>();
         Stack<TreeNode> succ = new Stack<>();
         TreeNode cur = root;
         while(cur != null){
-            if(cur.val >= target){
+            if(cur.val > target){
                 succ.push(cur);
                 cur = cur.left;
             }else{
@@ -25,38 +25,37 @@ class Solution {
         while(k > 0){
             if(pred.isEmpty() && succ.isEmpty()){
                 break;
-            }
-            if(pred.isEmpty()){
-                ret.add(getSuccessor(succ));
+            }else if(pred.isEmpty()){
+                ret.add(getSucc(succ));
             }else if(succ.isEmpty()){
-                ret.add(getPredecessor(pred));
-            }else if(Math.abs(target - pred.peek().val) < Math.abs(target - succ.peek().val)){
-                ret.add(getPredecessor(pred));
+                ret.add(getPred(pred));
+            }else if(Math.abs(pred.peek().val - target) < Math.abs(succ.peek().val - target)){
+                ret.add(getPred(pred));
             }else{
-                ret.add(getSuccessor(succ));
+                ret.add(getSucc(succ));
             }
             k--;
         }
         return ret;
     }
 
-    private int getPredecessor(Stack<TreeNode> st){
-        TreeNode pop = st.pop();
-        TreeNode cur = pop.left;
+    private int getSucc(Stack<TreeNode> succ){
+        TreeNode ret = succ.pop();
+        TreeNode cur = ret.right;
         while(cur != null){
-            st.push(cur);
-            cur = cur.right;
-        }
-        return pop.val;
-    }
-
-    private int getSuccessor(Stack<TreeNode> st){
-        TreeNode pop = st.pop();
-        TreeNode cur = pop.right;
-        while(cur != null){
-            st.push(cur);
+            succ.push(cur);
             cur = cur.left;
         }
-        return pop.val;
+        return ret.val;
+    }
+
+    private int getPred(Stack<TreeNode> pred){
+        TreeNode ret = pred.pop();
+        TreeNode cur = ret.left;
+        while(cur != null){
+            pred.push(cur);
+            cur = cur.right;
+        }
+        return ret.val;
     }
 }
