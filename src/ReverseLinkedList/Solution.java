@@ -6,19 +6,17 @@
  *     ListNode(int x) { val = x; }
  * }
  */
-public class Solution {
+class Solution {
     public ListNode reverseList(ListNode head) {
-        if(head == null){
-            return null;
-        }
+        if(head == null || head.next == null) return head;
         ListNode prev = null;
         ListNode cur = head;
-        ListNode post = null;
+        ListNode next = null;
         while(cur != null){
-            post = cur.next;
+            next = cur.next;
             cur.next = prev;
             prev = cur;
-            cur = post;
+            cur = next;
         }
         return prev;
     }
