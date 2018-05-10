@@ -14,11 +14,11 @@ class Solution {
         return max;
     }
 
-    private int dfs(TreeNode root){
-        if(root == null) return 0;
-        int left = dfs(root.left);
-        int right = dfs(root.right);
+    private int dfs(TreeNode node){
+        if(node == null) return 0;
+        int left = dfs(node.left);
+        int right = dfs(node.right);
         max = Math.max(max, left + right);
-        return 1 + Math.max(left, right);
+        return Math.max(left, right) + 1;
     }
 }
