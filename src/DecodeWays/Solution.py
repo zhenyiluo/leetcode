@@ -13,4 +13,3 @@ class Solution:
             if i > 1 and s[i-2:i] <= "26" and s[i-2:i] >= "10":
                 dp[i] += dp[i-2]
         return dp[len(s)]
-        
