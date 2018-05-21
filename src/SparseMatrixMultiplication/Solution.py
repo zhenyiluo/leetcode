@@ -34,4 +34,3 @@ class Solution:
                     ret[idx1][idx2] += val1 * val2
 
         return ret;
-                    
