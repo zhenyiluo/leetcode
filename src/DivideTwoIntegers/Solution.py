@@ -20,4 +20,3 @@ class Solution:
             ans += mul
             div -= tmp
         return -ans if negative else ans
-        
