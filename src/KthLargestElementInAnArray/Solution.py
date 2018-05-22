@@ -39,4 +39,3 @@ class Solution:
         tmp = nums[i]
         nums[i] = nums[j]
         nums[j] = tmp
-            
