@@ -26,4 +26,3 @@ class Solution:
             return self.tens[num // 10] + " " + self.helper(num % 10)
         else:
             return self.lessThan20[num // 100] + " Hundred " + self.helper(num % 100)
-        
