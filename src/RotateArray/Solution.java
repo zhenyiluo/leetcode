@@ -1,32 +1,22 @@
-public class Solution {
+class Solution {
     public void rotate(int[] nums, int k) {
-        if(nums == null){
+        if(nums == null || nums.length <= 1){
             return;
         }
-        int len = nums.length;
-        if(k % len == 0){
+        k = k % nums.length;
+        if(k == 0){
             return;
         }
-        
-        k %= len;
-        int len1 = len - k;
-        
-        reverse(nums, 0, len1 -1);
-        reverse(nums, len1, len -1);
-        reverse(nums, 0, len -1);
+        reverse(nums, 0, nums.length-1);
+        reverse(nums, 0, k-1);
+        reverse(nums, k, nums.length -1);
     }
-    
+
     private void reverse(int[] nums, int start, int end){
         while(start < end){
-            swap(nums, start, end);
-            start ++;
-            end--;
+            int tmp = nums[start];
+            nums[start++] = nums[end];
+            nums[end--] = tmp;
         }
-    }
-    
-    private void swap(int[] nums, int i, int j){
-        int tmp = nums[i];
-        nums[i] = nums[j];
-        nums[j] = tmp;
     }
 }
