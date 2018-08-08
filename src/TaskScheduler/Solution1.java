@@ -1,27 +1,28 @@
 class Solution {
     public int leastInterval(char[] tasks, int n) {
-        int[] num = new int[26];
-        for(int i = 0; i < tasks.length; i++){
-            num[tasks[i] - 'A']++;
+        if(tasks == null || tasks.length == 0 || n < 0) return 0;
+        int[] nums = new int[26];
+        for(char task: tasks){
+            nums[task - 'A'] ++;
         }
         PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> (b-a));
-        for(int i = 0; i < 26; i++){
-            if(num[i] != 0){
-                pq.add(num[i]);
+        for(int num: nums){
+            if(num != 0){
+                pq.add(num);
             }
         }
-        int ans = 0;
         int cycle = n + 1;
+        int ans = 0;
         while(!pq.isEmpty()){
             int work = 0;
-            List<Integer> tmp = new ArrayList<>();
+            List<Integer> list = new ArrayList<>();
             for(int i = 0; i < cycle; i++){
                 if(!pq.isEmpty()){
                     work++;
-                    tmp.add(pq.poll());
+                    list.add(pq.poll());
                 }
             }
-            for(int val : tmp){
+            for(int val: list){
                 if(val > 1){
                     pq.add(val-1);
                 }
