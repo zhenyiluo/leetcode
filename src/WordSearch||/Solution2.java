@@ -12,8 +12,7 @@ class Solution {
         boolean[][] visited = new boolean[m][n];
         for(int i = 0; i < m; i++){
             for(int j = 0; j < n; j++){
-                TrieNode cur = root;
-                dfs(board, cur, i, j, visited, ans);
+                dfs(board, root, i, j, visited, ans);
             }
         }
         return ans;
@@ -40,6 +39,7 @@ class Solution {
 
     private TrieNode buildTrie(String[] words){
         TrieNode root = new TrieNode();
+        if(words == null || words.length == 0) return root;
         for(String word: words){
             TrieNode cur = root;
             if(word == null || word.length() == 0) continue;
