@@ -1,18 +1,18 @@
 class NumArray {
-    int len;
     int[] tree;
     int[] vals;
     public NumArray(int[] nums) {
-        len = nums.length;
-        tree = new int[len+1];
-        vals = new int[len];
-        for(int i = 0; i < len; i++){
+        int n = nums.length;
+        tree = new int[n+1];
+        vals = new int[n];
+        for(int i = 0; i < n; i++){
             update(i, nums[i]);
         }
     }
 
     public void update(int i, int val) {
-        int diff = val - vals[i];
+        int cur = vals[i];
+        int diff = val - cur;
         if(diff == 0) return;
         vals[i] = val;
         for(int j = i+1; j < tree.length; j += j & (-j)){
@@ -25,11 +25,11 @@ class NumArray {
     }
 
     private int query(int i){
-        int ret = 0;
+        int sum = 0;
         for(int j = i+1; j > 0; j -= j & (-j)){
-            ret += tree[j];
+            sum += tree[j];
         }
-        return ret;
+        return sum;
     }
 }
 
