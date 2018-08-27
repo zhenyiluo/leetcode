@@ -1,7 +1,7 @@
 class NumArray {
     SegmentTreeNode root;
     public NumArray(int[] nums) {
-        root = buildTree(nums, 0, nums.length-1);
+        root = buildTree(nums, 0, nums.length -1);
     }
 
     public void update(int i, int val) {
@@ -13,9 +13,8 @@ class NumArray {
             node.val = val;
             return;
         }
-
         int mid = node.start + (node.end - node.start) / 2;
-        if(i <= mid){
+        if(mid >= i){
             update(node.left, i, val);
         }else{
             update(node.right, i, val);
@@ -27,15 +26,15 @@ class NumArray {
         return sumRange(root, i, j);
     }
 
-    private int sumRange(SegmentTreeNode node, int start, int end){
-        if(node.start == start && node.end == end) return node.val;
+    private int sumRange(SegmentTreeNode node, int i, int j){
+        if(node.start == i && node.end == j) return node.val;
         int mid = node.start + (node.end - node.start) / 2;
-        if(end <= mid){
-            return sumRange(node.left, start, end);
-        }else if(start > mid){
-            return sumRange(node.right, start, end);
+        if(mid >= j){
+            return sumRange(node.left, i, j);
+        }else if(mid < i){
+            return sumRange(node.right, i, j);
         }else{
-            return sumRange(node.left, start, mid) + sumRange(node.right, mid+1, end);
+            return sumRange(node.left, i, mid) + sumRange(node.right, mid+1, j);
         }
     }
 
@@ -45,7 +44,7 @@ class NumArray {
         if(start == end){
             root.val = nums[start];
         }else{
-            int mid = start + (end - start) / 2;
+            int mid = start + (end - start)/2;
             root.left = buildTree(nums, start, mid);
             root.right = buildTree(nums, mid+1, end);
             root.val = root.left.val + root.right.val;
@@ -55,17 +54,17 @@ class NumArray {
 }
 
 class SegmentTreeNode{
-    SegmentTreeNode left;
-    SegmentTreeNode right;
     int start;
     int end;
     int val;
+    SegmentTreeNode left;
+    SegmentTreeNode right;
     public SegmentTreeNode(int start, int end){
         this.start = start;
         this.end = end;
-        val = 0;
     }
 }
+
 /**
  * Your NumArray object will be instantiated and called as such:
  * NumArray obj = new NumArray(nums);
