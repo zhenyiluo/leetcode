@@ -9,9 +9,9 @@
 class Solution {
     public ListNode reverseList(ListNode head) {
         if(head == null || head.next == null) return head;
-        ListNode nextHead = head.next;
-        ListNode newHead = reverseList(nextHead);
-        nextHead.next = head;
+        ListNode tail = head.next;
+        ListNode newHead = reverseList(tail);
+        tail.next = head;
         head.next = null;
         return newHead;
     }
