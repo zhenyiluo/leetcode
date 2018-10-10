@@ -20,7 +20,7 @@ class Solution {
         ListNode prev = dummy;
         while(cnt >= k){
             cnt -= k;
-            prev.next = reverse(prev.next, k);
+            prev.next = reverseNodes(prev.next, k);
             for(int i = 0; i < k; i++){
                 prev = prev.next;
             }
@@ -28,11 +28,12 @@ class Solution {
         return dummy.next;
     }
 
-    private ListNode reverse(ListNode node, int k){
+    private ListNode reverseNodes(ListNode node, int k){
         ListNode prev = null;
+        ListNode next = null;
         ListNode cur = node;
         for(int i = 0; i < k; i++){
-            ListNode next = cur.next;
+            next = cur.next;
             cur.next = prev;
             prev = cur;
             cur = next;
